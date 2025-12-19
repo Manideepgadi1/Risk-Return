@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk-Return Analysis Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>📊 Risk-Return Analysis Dashboard</h1>
+                <p class="subtitle">Interactive analysis of 126 market indices performance metrics</p>
+            </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-content">
+                    <h3 id="avgReturn">-</h3>
+                    <p>Average Return</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚠️</div>
+                <div class="stat-content">
+                    <h3 id="avgRisk">-</h3>
+                    <p>Average Risk</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-content">
+                    <h3 id="bestSharpe">-</h3>
+                    <p>Best Sharpe Ratio</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-content">
+                    <h3 id="totalIndices">126</h3>
+                    <p>Total Indices</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls-panel">
+            <div class="control-group">
+                <label for="searchIndex">🔍 Search Index:</label>
+                <input type="text" id="searchIndex" placeholder="Type index name...">
+            </div>
+            <div class="control-group">
+                <label for="filterCategory">📂 Category:</label>
+                <select id="filterCategory">
+                    <option value="all">All Categories</option>
+                    <option value="broad">Broad Market</option>
+                    <option value="sector">Sectoral</option>
+                    <option value="thematic">Thematic</option>
+                    <option value="strategy">Strategy</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="riskFilter">⚠️ Max Risk:</label>
+                <input type="range" id="riskFilter" min="0" max="30" value="30" step="0.5">
+                <span id="riskValue">30%</span>
+            </div>
+            <button class="reset-btn" id="resetBtn">🔄 Reset View</button>
+        </div>
+
+        <!-- Chart Container -->
+        <div class="chart-container">
+            <canvas id="riskReturnChart"></canvas>
+        </div>
+
+        <!-- Quadrant Analysis -->
+        <div class="quadrant-info">
+            <div class="quadrant high-return-low-risk">
+                <h4>🌟 High Return - Low Risk</h4>
+                <p id="q1Count">-</p>
+                <small>Ideal Investment Zone</small>
+            </div>
+            <div class="quadrant high-return-high-risk">
+                <h4>⚡ High Return - High Risk</h4>
+                <p id="q2Count">-</p>
+                <small>Aggressive Growth</small>
+            </div>
+            <div class="quadrant low-return-low-risk">
+                <h4>🛡️ Low Return - Low Risk</h4>
+                <p id="q3Count">-</p>
+                <small>Conservative Zone</small>
+            </div>
+            <div class="quadrant low-return-high-risk">
+                <h4>⚠️ Low Return - High Risk</h4>
+                <p id="q4Count">-</p>
+                <small>Avoid Zone</small>
+            </div>
+        </div>
+
+        <!-- Top Performers Table -->
+        <div class="table-section">
+            <h2>🏆 Top Performers</h2>
+            <div class="table-tabs">
+                <button class="tab-btn active" data-tab="returns">Highest Returns</button>
+                <button class="tab-btn" data-tab="sharpe">Best Sharpe Ratio</button>
+                <button class="tab-btn" data-tab="low-risk">Lowest Risk</button>
+            </div>
+            <div class="table-container">
+                <table id="performanceTable">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Index</th>
+                            <th>Return (%)</th>
+                            <th>Risk (%)</th>
+                            <th>Sharpe Ratio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Index Detail Panel -->
+        <div class="detail-panel" id="detailPanel">
+            <div class="detail-content">
+                <button class="close-btn" id="closeDetail">✕</button>
+                <h3 id="detailIndex">-</h3>
+                <div class="detail-stats">
+                    <div class="detail-item">
+                        <span class="detail-label">Return:</span>
+                        <span class="detail-value" id="detailReturn">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Risk:</span>
+                        <span class="detail-value" id="detailRisk">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Sharpe Ratio:</span>
+                        <span class="detail-value" id="detailSharpe">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Rank by Return:</span>
+                        <span class="detail-value" id="detailRank">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2025 Risk-Return Analysis Dashboard | Data as of December 2025</p>
+        </footer>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
