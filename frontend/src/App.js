@@ -4,7 +4,10 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Re
 import { TrendingUp, TrendingDown, Target, BarChart3, Search, Filter, RefreshCw } from 'lucide-react';
 import './App.css';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+// API Base URL - automatically switches between development and production
+const API_BASE_URL = process.env.NODE_ENV === 'production' 
+  ? '/risk-return/api' 
+  : 'http://localhost:5002/api';
 
 // Category color mapping
 const CATEGORY_COLORS = {
